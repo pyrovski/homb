@@ -4,7 +4,7 @@
 # created: 7/26/08
 #============================================================
 
-CC = cc
-MPIFLAGS = -lmpi
+CC = mpicc
+#MPIFLAGS = -lmpi
 OMPFLAGS = -openmp
 OPTFLAGS = -O3

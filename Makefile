@@ -8,17 +8,20 @@ HOMB = homb.ex
 QUIVER = quiver.ex
 
 include config/Make.default
-include config/Make.mach.${MACHINE}
+-include config/Make.mach.${MACHINE}
 
 default: $(HOMB)
 
 all: $(HOMB) $(QUIVER)
 
-$(HOMB): src/homb.c
-	$(CC) $(MPIFLAGS) $(OMPFLAGS) -o $(HOMB) $(OPTFLAGS) src/homb.c
+$(HOMB): src/homb.o
+	$(CC) -o $@ $^ -Xlinker -rpath $(HOME)/local/lib -L$(HOME)/local/lib -lGreenMPI
+
+src/homb.o: src/homb.c
+	$(CC) $(MPIFLAGS) -o $@ -c $(OPTFLAGS) src/homb.c
 
 $(QUIVER): src/quiver.c
 	$(CC) $(MPIFLAGS) $(OMPFLAGS) -o $(QUIVER) $(OPTFLAGS) src/quiver.c
 
 clean:
-	rm *.ex
+	rm -f *.ex
